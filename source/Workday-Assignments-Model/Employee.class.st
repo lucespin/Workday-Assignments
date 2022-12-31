@@ -2,37 +2,36 @@ Class {
 	#name : #Employee,
 	#superclass : #Object,
 	#instVars : [
-		'availabilities'
+		'workdays'
 	],
 	#category : #'Workday-Assignments-Model'
 }
 
 { #category : #preconditions }
-Employee class >> assertHasWorkdayAvailability: anAvailabilityCollection [
+Employee class >> assertHasWorkdays: aWorkdayCollection [
 
 	AssertionChecker
-		enforce: [ anAvailabilityCollection isNotEmpty ]
-		because: 'Un empleado debe tener días disponibles para trabajar.'
+		enforce: [ aWorkdayCollection isNotEmpty ]
+		because: 'Un empleado debe tener días laborables.'
 		raising: InstanceCreationFailed
 ]
 
 { #category : #'instance creation' }
-Employee class >> availableOn: anAvailabilityCollection [
+Employee class >> workingOn: aWorkdayCollection [
 
-	self assertHasWorkdayAvailability: anAvailabilityCollection.
+	self assertHasWorkdays: aWorkdayCollection.
 
-	^ self new initializeAvailableOn: anAvailabilityCollection
+	^ self new initializeWorkingOn: aWorkdayCollection
 ]
 
 { #category : #'instance creation' }
-Employee >> initializeAvailableOn: aDate [
+Employee >> initializeWorkingOn: aWorkdayCollection [
 
-	availabilities := aDate
+	workdays := aWorkdayCollection
 ]
 
-{ #category : #testing }
-Employee >> isAvailableOn: aDate [
+{ #category : #querying }
+Employee >> worksOn: aDate [
 
-	^ availabilities anySatisfy: [ :availability | 
-		  availability satisfies: aDate ]
+	^ workdays anySatisfy: [ :workday | workday matchesWith: aDate ]
 ]

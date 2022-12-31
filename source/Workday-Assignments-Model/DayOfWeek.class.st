@@ -1,6 +1,6 @@
 Class {
 	#name : #DayOfWeek,
-	#superclass : #Availability,
+	#superclass : #WorkdayBehavior,
 	#instVars : [
 		'day'
 	],
@@ -20,7 +20,7 @@ DayOfWeek >> initializeOn: aDay [
 ]
 
 { #category : #testing }
-DayOfWeek >> satisfies: aDate [
+DayOfWeek >> matchesWith: aDate [
 
-	^ aDate dayOfWeekName = day name
+	^ aDate day = day
 ]

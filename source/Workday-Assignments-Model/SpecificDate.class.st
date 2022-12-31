@@ -1,6 +1,6 @@
 Class {
 	#name : #SpecificDate,
-	#superclass : #Availability,
+	#superclass : #WorkdayBehavior,
 	#instVars : [
 		'date'
 	],
@@ -20,7 +20,7 @@ SpecificDate >> initializeOn: aDate [
 ]
 
 { #category : #testing }
-SpecificDate >> satisfies: aDate [
+SpecificDate >> matchesWith: aDate [
 
-	^ date = aDate
+	^ aDate = date
 ]
