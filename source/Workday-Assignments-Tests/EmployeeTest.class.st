@@ -8,6 +8,12 @@ Class {
 	#category : #'Workday-Assignments-Tests'
 }
 
+{ #category : #accessing }
+EmployeeTest >> fridayWorkday [
+
+	^ Array with: (DayOfWeek on: Friday)
+]
+
 { #category : #running }
 EmployeeTest >> setUp [
 
@@ -20,59 +26,74 @@ EmployeeTest >> setUp [
 { #category : #tests }
 EmployeeTest >> testA [
 
-	| lucas |
-	lucas := Employee workingOn:
-		         (Array with: (SpecificDate on: programmersDay)).
+	| luna |
+	luna := Employee
+		        named: 'Luna'
+		        workingOn: (Array with: (SpecificDate on: programmersDay)).
 
-	self assert: (lucas worksOn: programmersDay)
+	self assert: (luna worksOn: programmersDay)
 ]
 
 { #category : #tests }
 EmployeeTest >> testB [
 
-	| lucas |
-	lucas := Employee workingOn:
-		         (Array with: (SpecificDate on: programmersDay)).
+	| luna |
+	luna := Employee
+		        named: 'Luna'
+		        workingOn: (Array with: (SpecificDate on: programmersDay)).
 
-	self deny: (lucas worksOn: christmas)
+	self deny: (luna worksOn: christmas)
 ]
 
 { #category : #tests }
 EmployeeTest >> testC [
 
-	| lucas |
-	lucas := Employee workingOn: (Array with: (DayOfWeek on: Wednesday)).
+	| luna |
+	luna := Employee
+		        named: 'Luna'
+		        workingOn: (Array with: (DayOfWeek on: Wednesday)).
 
-	self assert: (lucas worksOn: programmersDay)
+	self assert: (luna worksOn: programmersDay)
 ]
 
 { #category : #tests }
 EmployeeTest >> testD [
 
-	| lucas |
-	lucas := Employee workingOn: (Array with: (DayOfWeek on: Wednesday)).
+	| luna |
+	luna := Employee
+		        named: 'Luna'
+		        workingOn: (Array with: (DayOfWeek on: Wednesday)).
 
-	self deny: (lucas worksOn: christmas)
+	self deny: (luna worksOn: christmas)
 ]
 
 { #category : #tests }
 EmployeeTest >> testE [
 
 	self
-		should: [ Employee workingOn: Array empty ]
+		should: [ Employee named: '' workingOn: self fridayWorkday ]
 		raise: InstanceCreationFailed
-		withMessageText: 'Un empleado debe tener días laborables.'
+		withMessageText: 'Une empleade debe tener un nombre.'
 ]
 
 { #category : #tests }
 EmployeeTest >> testF [
 
 	| lucas |
-	lucas := Employee workingOn: (Array
+	lucas := Employee named: 'Luna' workingOn: (Array
 			          with: (SpecificDate on: programmersDay)
 			          with: (DayOfWeek on: Sunday)).
 
 	self
 		assert: (lucas worksOn: programmersDay);
 		assert: (lucas worksOn: christmas)
+]
+
+{ #category : #tests }
+EmployeeTest >> testG [
+
+	self
+		should: [ Employee named: 'Luna' workingOn: Array empty ]
+		raise: InstanceCreationFailed
+		withMessageText: 'Une empleade debe tener días laborables.'
 ]
