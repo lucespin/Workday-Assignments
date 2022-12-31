@@ -2,7 +2,7 @@ Class {
 	#name : #EmployeeTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'programmerDate',
+		'programmersDay',
 		'christmas'
 	],
 	#category : #'Workday-Assignments-Tests'
@@ -13,7 +13,7 @@ EmployeeTest >> setUp [
 
 	super setUp.
 
-	programmerDate := September thirteenth, 2023.
+	programmersDay := September thirteenth, 2023.
 	christmas := December twentyfifth, 2022
 ]
 
@@ -22,9 +22,9 @@ EmployeeTest >> testA [
 
 	| lucas |
 	lucas := Employee workingOn:
-		         (Array with: (SpecificDate on: programmerDate)).
+		         (Array with: (SpecificDate on: programmersDay)).
 
-	self assert: (lucas worksOn: programmerDate)
+	self assert: (lucas worksOn: programmersDay)
 ]
 
 { #category : #tests }
@@ -32,7 +32,7 @@ EmployeeTest >> testB [
 
 	| lucas |
 	lucas := Employee workingOn:
-		         (Array with: (SpecificDate on: programmerDate)).
+		         (Array with: (SpecificDate on: programmersDay)).
 
 	self deny: (lucas worksOn: christmas)
 ]
@@ -43,7 +43,7 @@ EmployeeTest >> testC [
 	| lucas |
 	lucas := Employee workingOn: (Array with: (DayOfWeek on: Wednesday)).
 
-	self assert: (lucas worksOn: programmerDate)
+	self assert: (lucas worksOn: programmersDay)
 ]
 
 { #category : #tests }
@@ -69,10 +69,10 @@ EmployeeTest >> testF [
 
 	| lucas |
 	lucas := Employee workingOn: (Array
-			          with: (SpecificDate on: programmerDate)
+			          with: (SpecificDate on: programmersDay)
 			          with: (DayOfWeek on: Sunday)).
 
 	self
-		assert: (lucas worksOn: programmerDate);
+		assert: (lucas worksOn: programmersDay);
 		assert: (lucas worksOn: christmas)
 ]
