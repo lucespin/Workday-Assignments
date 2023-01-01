@@ -13,7 +13,7 @@ Employee class >> assertHasName: aName [
 
 	AssertionChecker
 		enforce: [ aName isNotEmpty ]
-		because: 'Une empleade debe tener un nombre.'
+		because: 'Une empleade debe tener nombre.'
 		raising: InstanceCreationFailed
 ]
 
