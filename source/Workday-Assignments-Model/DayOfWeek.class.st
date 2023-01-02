@@ -13,7 +13,7 @@ DayOfWeek class >> on: aDay [
 	^ self new initializeOn: aDay
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 DayOfWeek >> initializeOn: aDay [
 
 	day := aDay

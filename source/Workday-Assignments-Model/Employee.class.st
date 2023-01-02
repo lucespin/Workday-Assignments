@@ -36,7 +36,7 @@ Employee class >> named: aName workingOn: aWorkdayCollection [
 	^ self new initializeNamed: aName workingOn: aWorkdayCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 Employee >> initializeNamed: aName workingOn: aWorkdayCollection [
 
 	name := aName.

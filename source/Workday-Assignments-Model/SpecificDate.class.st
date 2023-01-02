@@ -13,7 +13,7 @@ SpecificDate class >> on: aDate [
 	^ self new initializeOn: aDate
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 SpecificDate >> initializeOn: aDate [
 
 	date := aDate
