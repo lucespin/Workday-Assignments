@@ -36,7 +36,7 @@ EmployeeTest >> testAnEmployeeMustHaveAName [
 EmployeeTest >> testAnEmployeeMustHaveWorkdays [
 
 	self
-		should: [ Employee named: 'Luna' workingOn: Array empty ]
+		should: [ Employee named: 'Pepe' workingOn: Array empty ]
 		raise: InstanceCreationFailed
 		withMessageText: 'Une empleade debe tener días laborables.'
 ]
@@ -55,14 +55,14 @@ EmployeeTest >> testAnEmployeeWhitDayOfWeekAsWorkdayWorksOnDateFallingOnThatDay 
 { #category : #tests }
 EmployeeTest >> testAnEmployeeWhitSpecificDateAndDayOfWeekAsWorkdaysWorksOnCompatibleDates [
 
-	| lucas |
-	lucas := Employee named: 'Luna' workingOn: (Array
+	| luna |
+	luna := Employee named: 'Luna' workingOn: (Array
 			          with: (SpecificDate on: programmersDay)
 			          with: (DayOfWeek on: Sunday)).
 
 	self
-		assert: (lucas worksOn: programmersDay);
-		assert: (lucas worksOn: christmas)
+		assert: (luna worksOn: programmersDay);
+		assert: (luna worksOn: christmas)
 ]
 
 { #category : #tests }

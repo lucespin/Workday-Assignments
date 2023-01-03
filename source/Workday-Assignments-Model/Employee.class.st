@@ -8,7 +8,7 @@ Class {
 	#category : #'Workday-Assignments-Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : #preconditions }
 Employee class >> assertHasName: aName [
 
 	AssertionChecker
@@ -49,7 +49,7 @@ Employee >> printOn: aStream [
 	aStream nextPutAll: name
 ]
 
-{ #category : #querying }
+{ #category : #testing }
 Employee >> worksOn: aDate [
 
 	^ workdays anySatisfy: [ :workday | workday matchesWith: aDate ]

@@ -75,6 +75,12 @@ WorkingDateExceptionRequest >> deny [
 	state deny: self
 ]
 
+{ #category : #accessing }
+WorkingDateExceptionRequest >> employee [
+
+	^ employee
+]
+
 { #category : #testing }
 WorkingDateExceptionRequest >> increasesAvailability [
 
@@ -97,10 +103,9 @@ WorkingDateExceptionRequest >> isRelatedTo: anEmployee on: aDate [
 ]
 
 { #category : #testing }
-WorkingDateExceptionRequest >> makesAvailableTo: anEmployee on: aDate [
+WorkingDateExceptionRequest >> makesAvailableEmployeeOn: aDate [
 
-	^ (self isRelatedTo: anEmployee on: aDate) and: [ 
-		  state increasesAvailability: self ]
+	^ aDate = date and: [ state increasesAvailability: self ]
 ]
 
 { #category : #testing }

@@ -30,7 +30,7 @@ WorkingDateExceptionRequestTest >> fridayDate [
 	^ January sixth, 2023
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 WorkingDateExceptionRequestTest >> sundayDate [
 
 	^ December twentyfifth, 2022
@@ -49,8 +49,8 @@ WorkingDateExceptionRequestTest >> testADeniedWorkingDateExceptionRequestIncreas
 	request deny.
 
 	self
-		deny: (request makesAvailableTo: employee on: date);
-		deny: (request makesUnavailableTo: employee on: date)
+		deny: (request makesUnavailableTo: employee on: date);
+		deny: (request makesAvailableEmployeeOn: date)
 ]
 
 { #category : #tests }
@@ -67,7 +67,7 @@ WorkingDateExceptionRequestTest >> testADeniedWorkingDateExceptionRequestReducin
 
 	self
 		deny: (request makesUnavailableTo: employee on: date);
-		deny: (request makesAvailableTo: employee on: date)
+		deny: (request makesAvailableEmployeeOn: date)
 ]
 
 { #category : #tests }
@@ -82,8 +82,9 @@ WorkingDateExceptionRequestTest >> testAPendingWorkingDateExceptionRequestIncrea
 		           on: date.
 
 	self
-		deny: (request makesAvailableTo: employee on: date);
-		deny: (request makesUnavailableTo: employee on: date)
+		deny: (request makesUnavailableTo: employee on: date);
+		deny: (request makesAvailableEmployeeOn: date)
+		
 ]
 
 { #category : #tests }
@@ -99,7 +100,7 @@ WorkingDateExceptionRequestTest >> testAPendingWorkingDateExceptionRequestReduci
 
 	self
 		deny: (request makesUnavailableTo: employee on: date);
-		deny: (request makesAvailableTo: employee on: date)
+		deny: (request makesAvailableEmployeeOn: date)
 ]
 
 { #category : #tests }
@@ -139,7 +140,7 @@ WorkingDateExceptionRequestTest >> testAnApprovedWorkingDateExceptionRequestIncr
 	request approve.
 
 	self
-		assert: (request makesAvailableTo: employee on: date);
+		assert: (request makesAvailableEmployeeOn: date);
 		deny: (request makesUnavailableTo: employee on: date)
 ]
 
@@ -157,5 +158,5 @@ WorkingDateExceptionRequestTest >> testAnApprovedWorkingDateExceptionRequestThat
 
 	self
 		assert: (request makesUnavailableTo: employee on: date);
-		deny: (request makesAvailableTo: employee on: date)
+		deny: (request makesAvailableEmployeeOn: date)
 ]

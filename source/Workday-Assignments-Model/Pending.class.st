@@ -4,25 +4,25 @@ Class {
 	#category : #'Workday-Assignments-Model'
 }
 
-{ #category : #asserting }
+{ #category : #'changing state' }
 Pending >> approve: anUnavailabilityRequest [
 
 	anUnavailabilityRequest changeTo: Approved new
 ]
 
-{ #category : #asserting }
+{ #category : #'changing state' }
 Pending >> deny: anUnavailabilityRequest [
 
 	anUnavailabilityRequest changeTo: Denied new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Pending >> increasesAvailability: aWorkdayExceptionRequest [
 
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Pending >> reducesAvailability: aWorkdayExceptionRequest [
 
 	^ false

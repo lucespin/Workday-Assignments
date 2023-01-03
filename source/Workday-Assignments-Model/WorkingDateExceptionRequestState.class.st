@@ -4,25 +4,25 @@ Class {
 	#category : #'Workday-Assignments-Model'
 }
 
-{ #category : #asserting }
+{ #category : #'changing state' }
 WorkingDateExceptionRequestState >> approve: anUnavailabilityRequest [
 
 	self subclassResponsibility
 ]
 
-{ #category : #asserting }
+{ #category : #'changing state' }
 WorkingDateExceptionRequestState >> deny: anUnavailabilityRequest [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 WorkingDateExceptionRequestState >> increasesAvailability: aWorkdayExceptionRequest [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 WorkingDateExceptionRequestState >> reducesAvailability: aWorkdayExceptionRequest [
 
 	^ self subclassResponsibility
