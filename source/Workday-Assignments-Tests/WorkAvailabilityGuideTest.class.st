@@ -6,15 +6,52 @@ Class {
 		'requestRepository',
 		'workAvailabilityGuide',
 		'employeeWorkingOnFridays',
-		'anotherEmployeeWorkingOnFridays'
+		'anotherEmployeeWorkingOnFridays',
+		'employeeWorkingOnWeekends',
+		'employeeWorkingOnChristmas'
 	],
 	#category : #'Workday-Assignments-Tests'
 }
 
 { #category : #accessing }
+WorkAvailabilityGuideTest >> anotherEmployeeWorkingOnFridays [
+
+	^ Employee
+		  named: 'Alba'
+		  workingOn: (Array with: (DayOfWeek on: Friday))
+]
+
+{ #category : #accessing }
 WorkAvailabilityGuideTest >> christmas [
 
 	^ December twentyfifth, 2022
+]
+
+{ #category : #accessing }
+WorkAvailabilityGuideTest >> employeeWorkingOnChristmas [
+
+	^ Employee
+		  named: 'Benjamín'
+		  workingOn: (Array with: (SpecificDate on: self christmas))
+]
+
+{ #category : #accessing }
+WorkAvailabilityGuideTest >> employeeWorkingOnFridays [
+
+	^ Employee
+		  named: 'Dante'
+		  workingOn: (Array with: (DayOfWeek on: Friday))
+]
+
+{ #category : #accessing }
+WorkAvailabilityGuideTest >> employeeWorkingOnWeekends [
+
+	^ Employee
+		  named: 'Renata'
+		  workingOn:
+		  	(Array 
+				with: (DayOfWeek on: Saturday) 
+				with: (DayOfWeek on: Sunday))
 ]
 
 { #category : #accessing }
@@ -38,51 +75,92 @@ WorkAvailabilityGuideTest >> setUp [
 { #category : #running }
 WorkAvailabilityGuideTest >> setUpEmployees [
 
-	employeeWorkingOnFridays := 
-		Employee
-			named: 'Juan'
-		  	workingOn: (Array with: (DayOfWeek on: Friday)).
-				
-	anotherEmployeeWorkingOnFridays := 
-		Employee 
-			named: 'Alba' 
-			workingOn: (Array with: (DayOfWeek on: Friday))
+	employeeWorkingOnFridays := self employeeWorkingOnFridays.
+	anotherEmployeeWorkingOnFridays := self anotherEmployeeWorkingOnFridays.
+	employeeWorkingOnWeekends := self employeeWorkingOnWeekends.
+	employeeWorkingOnChristmas := self employeeWorkingOnChristmas
 ]
 
 { #category : #'test support' }
-WorkAvailabilityGuideTest >> startManagingAnotherEmployeeWorkingOnFridays [
+WorkAvailabilityGuideTest >> startManagingAndApprove: aWorkingDateExceptionRequest [
 
-	employeeRepository startManaging: anotherEmployeeWorkingOnFridays
+	self startManagingRequest: aWorkingDateExceptionRequest.
+
+	aWorkingDateExceptionRequest approve
 ]
 
 { #category : #'test support' }
-WorkAvailabilityGuideTest >> startManagingApprovedRequestIncreasingAvailabilityOf: anEmployee on: aDate [
+WorkAvailabilityGuideTest >> startManagingAndApproveRequestIncreasingAvailabilityOf: anEmployee on: aDate [
 
-	requestRepository startManaging: (
-		WorkingDateExceptionRequest
-			 increasingAvailabilityOf: anEmployee
-			 on: aDate) approve
-]
-
-{ #category : #'test support' }
-WorkAvailabilityGuideTest >> startManagingApprovedRequestReducingAvailabilityOf: anEmployee on: aDate [
-
-	requestRepository startManaging: (
-		WorkingDateExceptionRequest
-			 reducingAvailabilityOf: anEmployee
-			 on: aDate) approve
-]
-
-{ #category : #'test support' }
-WorkAvailabilityGuideTest >> startManagingEmployeeWorkingOnFridays [
+	| request |
 	
-	employeeRepository startManaging: employeeWorkingOnFridays
+	request := WorkingDateExceptionRequest
+		           increasingAvailabilityOf: anEmployee
+		           on: aDate.
+
+	self startManagingAndApprove: request
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingAndApproveRequestReducingAvailabilityOf: anEmployee on: aDate [
+
+	| request |
+	
+	request := WorkingDateExceptionRequest
+		           reducingAvailabilityOf: anEmployee
+		           on: aDate.
+
+	self startManagingAndApprove: request
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingAndDeny: aWorkingDateExceptionRequest [
+
+	self startManagingRequest: aWorkingDateExceptionRequest.
+
+	aWorkingDateExceptionRequest deny
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingAndDenyRequestIncreasingAvailabilityOf: anEmployee on: aDate [
+
+	| request |
+	
+	request := WorkingDateExceptionRequest
+		           increasingAvailabilityOf: anEmployee
+		           on: aDate.
+
+	self startManagingAndDeny: request
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingAndDenyRequestReducingAvailabilityOf: anEmployee on: aDate [
+
+	| request |
+	
+	request := WorkingDateExceptionRequest
+		           reducingAvailabilityOf: anEmployee
+		           on: aDate.
+
+	self startManagingAndDeny: request
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingEmployee: anEmployee [
+
+	employeeRepository startManaging: anEmployee
+]
+
+{ #category : #'test support' }
+WorkAvailabilityGuideTest >> startManagingRequest: aWorkingDateExceptionRequest [
+
+	requestRepository startManaging: aWorkingDateExceptionRequest
 ]
 
 { #category : #tests }
-WorkAvailabilityGuideTest >> testA [
+WorkAvailabilityGuideTest >> test01HavingAnEmployeeWorkingOnFridaysWithoutExceptionRequestsThenIsTheOnlyOneAvailableOnFridayDate [
 
-	self startManagingEmployeeWorkingOnFridays.
+	self startManagingEmployee: employeeWorkingOnFridays.
 
 	self
 		withTheOnlyOneIn:
@@ -92,10 +170,40 @@ WorkAvailabilityGuideTest >> testA [
 ]
 
 { #category : #tests }
-WorkAvailabilityGuideTest >> testB [
+WorkAvailabilityGuideTest >> test02HavingOnlyOneEmployeeWithApprovedExceptionToNotWorkOnADateThenThereAreNoAvailableEmployeesOnThatDate [
 
-	self startManagingEmployeeWorkingOnFridays.
-	self startManagingAnotherEmployeeWorkingOnFridays.
+	self startManagingEmployee: employeeWorkingOnFridays.
+	self
+		startManagingAndApproveRequestReducingAvailabilityOf:
+			employeeWorkingOnFridays
+		on: self fridayDate.
+
+	self
+		assertEmpty: 
+			(workAvailabilityGuide availableEmployeesOn: self fridayDate)
+]
+
+{ #category : #tests }
+WorkAvailabilityGuideTest >> test03HavingOnlyOneEmployeeWithApprovedExceptionToWorkOnADateThenIsTheOnlyOneAvailableOnThatDate [
+
+	self startManagingEmployee: employeeWorkingOnFridays.
+	self
+		startManagingAndApproveRequestIncreasingAvailabilityOf:
+			employeeWorkingOnFridays
+		on: self christmas.
+
+	self
+		withTheOnlyOneIn:
+			(workAvailabilityGuide availableEmployeesOn: self christmas)
+		do: [ :availableEmployee | 
+			availableEmployee = employeeWorkingOnFridays ]
+]
+
+{ #category : #tests }
+WorkAvailabilityGuideTest >> test04HavingEmployeesWorkingOnFridaysWithoutExceptionRequestsThenThereAreAllAvailableOnFridayDate [
+
+	self startManagingEmployee: employeeWorkingOnFridays.
+	self startManagingEmployee: anotherEmployeeWorkingOnFridays.
 
 	self
 		assertCollection:
@@ -107,31 +215,39 @@ WorkAvailabilityGuideTest >> testB [
 ]
 
 { #category : #tests }
-WorkAvailabilityGuideTest >> testC [
+WorkAvailabilityGuideTest >> test05HavingAnEmployeeWithExceptionToWorkOnADateAndOthersEmployeesWorkingOnTheSameThenThereAreAllAvailableOnThatDate [
 
-	self startManagingEmployeeWorkingOnFridays.
-	self
-		startManagingApprovedRequestReducingAvailabilityOf:
-			employeeWorkingOnFridays
-		on: self fridayDate.
+	self test03HavingOnlyOneEmployeeWithApprovedExceptionToWorkOnADateThenIsTheOnlyOneAvailableOnThatDate.
+	self startManagingEmployee: employeeWorkingOnWeekends.
+	self startManagingEmployee: employeeWorkingOnChristmas.
 
 	self
-		assertEmpty: 
-			(workAvailabilityGuide availableEmployeesOn: self fridayDate)
+		assertCollection:
+		(workAvailabilityGuide availableEmployeesOn: self christmas)
+		hasSameElements: (Array
+				 with: employeeWorkingOnFridays
+				 with: employeeWorkingOnWeekends
+				 with: employeeWorkingOnChristmas)
 ]
 
 { #category : #tests }
-WorkAvailabilityGuideTest >> testD [
+WorkAvailabilityGuideTest >> test06AvailableEmployeesOnADateHavingAStrongMixOfEmployeesAndWorkingDateExceptions [
 
-	self startManagingEmployeeWorkingOnFridays.
-	self
-		startManagingApprovedRequestIncreasingAvailabilityOf:
-			employeeWorkingOnFridays
-		on: self christmas.
+	self test05HavingAnEmployeeWithExceptionToWorkOnADateAndOthersEmployeesWorkingOnTheSameThenThereAreAllAvailableOnThatDate.
+	self 	startManagingAndApproveRequestReducingAvailabilityOf:
+				employeeWorkingOnWeekends
+			on: self christmas.
+	self startManagingAndDenyRequestReducingAvailabilityOf: 
+				employeeWorkingOnChristmas 
+			on: self christmas.
+	self startManagingAndDenyRequestIncreasingAvailabilityOf:
+				anotherEmployeeWorkingOnFridays
+			on: self christmas.
 
 	self
-		withTheOnlyOneIn:
+		assertCollection:
 			(workAvailabilityGuide availableEmployeesOn: self christmas)
-		do: [ :availableEmployee | 
-			availableEmployee = employeeWorkingOnFridays ]
+		hasSameElements: (Array
+				 with: employeeWorkingOnFridays
+				 with: employeeWorkingOnChristmas)
 ]
